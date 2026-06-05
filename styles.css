@@ -612,6 +612,10 @@
       line-height: 1.65;
     }
 
+    .service-extra-action {
+      padding: 1.2rem 1.35rem 1.35rem;
+    }
+
     .faq {
       background: var(--white);
     }
