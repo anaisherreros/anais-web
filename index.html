@@ -1,796 +1,37 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anaïs Herreros | Astrología psicológica</title>
-  <meta name="description" content="Recibe una primera lectura gratuita de tu carta natal y descubre el trabajo de Anaïs Herreros en astrología psicológica." />
+  <title>AnaÃ¯s Herreros | AstrologÃ­a psicolÃ³gica</title>
+  <meta name="description" content="Recibe una primera lectura gratuita de tu carta natal y descubre el trabajo de AnaÃ¯s Herreros en astrologÃ­a psicolÃ³gica." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --navy: #04134F;
-      --navy-soft: #3A517A;
-      --white: #F7F7F7;
-      --gray: #E6E3DF;
-      --black: #1A1A1A;
-      --gold: #D4AF37;
-      --ink-soft: rgba(26, 26, 26, .68);
-      --page: clamp(1.25rem, 4vw, 4.5rem);
-      --max: 1120px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--white);
-      color: var(--black);
-      font-family: "Montserrat", Arial, sans-serif;
-      line-height: 1.72;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body.nav-open { overflow: hidden; }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    h1, h2, h3, p { margin-top: 0; }
-    h1, h2, h3, .logo-name, .price {
-      font-family: "Marcellus", Georgia, serif;
-      font-weight: 400;
-    }
-
-    #progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 80;
-      width: 0%;
-      height: 2px;
-      background: var(--gold);
-      transition: width .1s linear;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(4, 19, 79, .97);
-      color: var(--white);
-      border-bottom: 1px solid rgba(247, 247, 247, .1);
-      backdrop-filter: blur(14px);
-    }
-
-    .nav-inner {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      padding: .75rem var(--page) .72rem;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      grid-template-rows: auto auto;
-      gap: .55rem 1rem;
-      align-items: center;
-    }
-
-    .logo {
-      grid-column: 2;
-      display: grid;
-      justify-items: center;
-      gap: .28rem;
-      text-align: center;
-    }
-
-    .logo img {
-      width: 62px;
-      height: 62px;
-      object-fit: contain;
-      border-radius: 50%;
-    }
-
-    .logo-name {
-      font-size: clamp(1rem, 1.4vw, 1.28rem);
-      letter-spacing: .14em;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .logo-sub {
-      color: var(--gold);
-      font-size: .46rem;
-      font-weight: 600;
-      letter-spacing: .25em;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: clamp(.9rem, 2vw, 1.6rem);
-      padding-top: .45rem;
-      border-top: 1px solid rgba(247, 247, 247, .09);
-    }
-
-    .nav-links a,
-    .drawer a {
-      font-size: .68rem;
-      font-weight: 600;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      opacity: .72;
-      transition: opacity .2s ease, color .2s ease;
-    }
-
-    .nav-links a:hover,
-    .drawer a:hover { opacity: 1; color: var(--gold); }
-
-    .nav-cta {
-      padding: 8px 18px;
-      border: 1px solid var(--gold);
-      border-radius: 2px;
-      color: var(--navy) !important;
-      background: var(--white);
-      opacity: 1 !important;
-      letter-spacing: .12em;
-      transition: background .2s ease, transform .15s ease;
-    }
-
-    .nav-cta:hover {
-      background: var(--gray);
-      transform: translateY(-1px);
-    }
-
-    .menu {
-      display: none;
-      grid-column: 3;
-      justify-self: end;
-      width: 42px;
-      height: 42px;
-      position: relative;
-      border: 1px solid rgba(247, 247, 247, .28);
-      border-radius: 50%;
-      background: transparent;
-      color: var(--white);
-      cursor: pointer;
-    }
-
-    .menu span,
-    .menu::before,
-    .menu::after {
-      content: "";
-      width: 17px;
-      height: 1px;
-      position: absolute;
-      left: 12px;
-      background: currentColor;
-      transition: transform .2s ease, opacity .2s ease;
-    }
-
-    .menu::before { top: 14px; }
-    .menu span { top: 20px; }
-    .menu::after { top: 26px; }
-    .nav.open .menu::before { transform: translateY(6px) rotate(45deg); }
-    .nav.open .menu span { opacity: 0; }
-    .nav.open .menu::after { transform: translateY(-6px) rotate(-45deg); }
-
-    .drawer {
-      display: none;
-      grid-column: 1 / -1;
-      padding: .5rem 0 1rem;
-      border-top: 1px solid rgba(247, 247, 247, .1);
-    }
-
-    .nav.open .drawer {
-      display: grid;
-      gap: .9rem;
-    }
-
-    .section {
-      padding: clamp(4.4rem, 8vw, 7rem) var(--page);
-    }
-
-    .section-inner {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-    }
-
-    .label {
-      display: block;
-      margin-bottom: 1.1rem;
-      color: var(--gold);
-      font-size: .68rem;
-      font-weight: 600;
-      letter-spacing: .2em;
-      line-height: 1.4;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 560px;
-      margin-bottom: 1.25rem;
-      color: var(--navy);
-      font-size: clamp(1.95rem, 3.7vw, 3.35rem);
-      line-height: 1.16;
-      text-wrap: pretty;
-    }
-
-    h2 {
-      max-width: 680px;
-      margin-bottom: 1rem;
-      color: var(--navy);
-      font-size: clamp(1.85rem, 3.6vw, 3.15rem);
-      line-height: 1.12;
-      text-wrap: pretty;
-    }
-
-    h3 {
-      margin-bottom: .65rem;
-      color: var(--navy);
-      font-size: clamp(1.25rem, 2vw, 1.62rem);
-      line-height: 1.22;
-    }
-
-    .lead {
-      max-width: 640px;
-      margin-bottom: 0;
-      color: var(--ink-soft);
-      font-size: clamp(1rem, 1.35vw, 1.12rem);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: .86rem 1.15rem;
-      border: 1px solid transparent;
-      border-radius: 2px;
-      font-size: .76rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      line-height: 1.2;
-      text-align: center;
-      text-transform: uppercase;
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px rgba(4, 19, 79, .18);
-    }
-
-    .btn-primary {
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .btn-light {
-      background: var(--white);
-      color: var(--navy);
-      border-color: rgba(212, 175, 55, .8);
-    }
-
-    .note {
-      margin-top: .85rem;
-      margin-bottom: 0;
-      color: rgba(26, 26, 26, .48);
-      font-size: .78rem;
-    }
-
-    .hero {
-      padding: clamp(4rem, 7vw, 6.5rem) var(--page) clamp(3.8rem, 7vw, 6rem);
-      background:
-        linear-gradient(135deg, rgba(4, 19, 79, .04), transparent 34%),
-        var(--white);
-    }
-
-    .hero-grid {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.03fr) minmax(320px, .78fr);
-      gap: clamp(2rem, 5vw, 4.8rem);
-      align-items: start;
-    }
-
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      background: var(--navy);
-      color: var(--white);
-      padding: clamp(1.6rem, 4vw, 2.65rem);
-      border-radius: 4px;
-      box-shadow: 0 24px 60px rgba(4, 19, 79, .16);
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-
-    .hero-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 28px 70px rgba(4, 19, 79, .22);
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(110deg, rgba(247, 247, 247, .055) 0 1px, transparent 1px 16px),
-        linear-gradient(18deg, rgba(212, 175, 55, .11), transparent 45%);
-      opacity: .75;
-      pointer-events: none;
-    }
-
-    .hero-card > * { position: relative; }
-    .hero-card h2 {
-      color: var(--white);
-      font-size: clamp(1.45rem, 2.5vw, 2.05rem);
-      line-height: 1.2;
-    }
-
-    .hero-card p {
-      color: rgba(247, 247, 247, .76);
-      font-size: .92rem;
-    }
-
-    .steps {
-      display: grid;
-      gap: .9rem;
-      margin: 1.55rem 0 1.8rem;
-      padding: 0;
-      list-style: none;
-    }
-
-    .steps li {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: .85rem;
-      align-items: start;
-      color: rgba(247, 247, 247, .82);
-      font-size: .92rem;
-      line-height: 1.55;
-    }
-
-    .steps span {
-      display: grid;
-      place-items: center;
-      width: 34px;
-      height: 34px;
-      border: 1px solid rgba(212, 175, 55, .65);
-      border-radius: 50%;
-      color: var(--gold);
-      font-size: .72rem;
-      font-weight: 600;
-    }
-
-    .trust-line {
-      margin-top: 1rem;
-      color: rgba(247, 247, 247, .52) !important;
-      font-size: .76rem !important;
-    }
-
-    .who {
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .who h2,
-    .who h3 { color: var(--white); }
-    .who .lead { color: rgba(247, 247, 247, .72); }
-
-    .fit-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.4rem, 4vw, 3rem);
-      margin-top: 3rem;
-      align-items: start;
-    }
-
-    .fit-column {
-      border-top: 2px solid var(--gold);
-      background: var(--white);
-    }
-
-    .fit-column h3 {
-      margin: 0;
-      padding: 1.2rem 1.35rem;
-      border-bottom: 1px solid rgba(4, 19, 79, .1);
-      color: var(--navy);
-    }
-
-    .fit-item {
-      padding: 1.05rem 1.35rem;
-      border-bottom: 1px solid rgba(4, 19, 79, .1);
-      transition: padding-left .2s ease, background .2s ease;
-    }
-
-    .fit-item:last-child { border-bottom: 0; }
-    .fit-item:hover { padding-left: 1.65rem; background: rgba(4, 19, 79, .025); }
-
-    .fit-item strong {
-      display: block;
-      margin-bottom: .25rem;
-      color: var(--navy);
-      font-size: .92rem;
-      font-weight: 600;
-    }
-
-    .fit-item p {
-      margin-bottom: 0;
-      color: var(--ink-soft);
-      font-size: .92rem;
-      line-height: 1.65;
-    }
-
-    .section-action {
-      display: flex;
-      justify-content: center;
-      margin-top: 2.4rem;
-    }
-
-    .about-grid,
-    .service-grid {
-      display: grid;
-      grid-template-columns: minmax(260px, .7fr) minmax(0, 1fr);
-      gap: clamp(2rem, 6vw, 5rem);
-      align-items: center;
-    }
-
-    .portrait {
-      min-height: clamp(260px, 36vw, 430px);
-      display: grid;
-      place-items: center;
-      position: relative;
-      overflow: hidden;
-      border-radius: 4px;
-      background:
-        linear-gradient(145deg, rgba(4, 19, 79, .92), rgba(58, 81, 122, .8)),
-        var(--navy);
-      color: rgba(247, 247, 247, .4);
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    .portrait::before {
-      content: "";
-      position: absolute;
-      inset: 8%;
-      border: 1px solid rgba(212, 175, 55, .42);
-    }
-
-    .about-copy p {
-      color: var(--ink-soft);
-    }
-
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      margin-top: 1.7rem;
-      padding-top: 1.4rem;
-      border-top: 1px solid rgba(4, 19, 79, .12);
-    }
-
-    .stat strong {
-      display: block;
-      margin-bottom: .3rem;
-      color: var(--navy);
-      font-family: "Marcellus", Georgia, serif;
-      font-size: 1.6rem;
-      font-weight: 400;
-      line-height: 1;
-    }
-
-    .stat span {
-      color: rgba(26, 26, 26, .52);
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .service {
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .service h2,
-    .service h3 { color: var(--white); }
-
-    .service-copy p { color: rgba(247, 247, 247, .72); }
-
-    .service-panel {
-      padding: clamp(1.5rem, 3.5vw, 2.4rem);
-      border-top: 3px solid var(--gold);
-      background: var(--white);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, .12);
-      transition: transform .25s ease, box-shadow .25s ease;
-    }
-
-    .service-panel h3 {
-      color: var(--navy);
-    }
-
-    .service-panel:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 26px 64px rgba(0, 0, 0, .16);
-    }
-
-    .service-panel ul {
-      display: grid;
-      gap: .9rem;
-      margin: 1.4rem 0 1.7rem;
-      padding: 0;
-      list-style: none;
-    }
-
-    .service-panel li {
-      display: grid;
-      grid-template-columns: 9px 1fr;
-      gap: .75rem;
-      color: var(--ink-soft);
-      font-size: .92rem;
-    }
-
-    .service-panel li::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      margin-top: .66rem;
-      border-radius: 50%;
-      background: var(--gold);
-    }
-
-    .price {
-      margin-bottom: .25rem;
-      color: var(--navy);
-      font-size: clamp(2.6rem, 5vw, 4.1rem);
-      line-height: 1;
-    }
-
-    .price-detail {
-      margin-bottom: 1.5rem;
-      color: rgba(26, 26, 26, .54);
-      font-size: .84rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .service .note {
-      color: rgba(26, 26, 26, .52);
-    }
-
-    .service-extra {
-      width: min(100%, var(--max));
-      margin: clamp(2.8rem, 6vw, 4.5rem) auto 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.4rem, 4vw, 3rem);
-      align-items: start;
-    }
-
-    .service-extra-num {
-      display: inline-block;
-      margin-right: .65rem;
-      color: var(--gold);
-      font-family: "Marcellus", Georgia, serif;
-      font-size: 1.15rem;
-      line-height: 1;
-      vertical-align: baseline;
-    }
-
-    .service-extra-block {
-      border-top: 2px solid var(--gold);
-      background: var(--white);
-      border-left: 1px solid rgba(4, 19, 79, .1);
-      border-right: 1px solid rgba(4, 19, 79, .1);
-    }
-
-    .service-extra-block h3 {
-      margin: 0;
-      padding: 1.2rem 1.35rem;
-      border-bottom: 1px solid rgba(4, 19, 79, .1);
-      color: var(--navy);
-    }
-
-    .service-extra-item {
-      padding: 1.05rem 1.35rem;
-      border-bottom: 1px solid rgba(4, 19, 79, .1);
-      transition: padding-left .2s ease, background .2s ease;
-    }
-
-    .service-extra-item:last-child { border-bottom: 0; }
-    .service-extra-item:hover { padding-left: 1.65rem; background: rgba(4, 19, 79, .025); }
-
-    .service-extra-item strong {
-      display: block;
-      margin-bottom: .25rem;
-      color: var(--navy);
-      font-size: .92rem;
-      font-weight: 600;
-    }
-
-    .service-extra-item p {
-      margin-bottom: 0;
-      color: var(--ink-soft);
-      font-size: .92rem;
-      line-height: 1.65;
-    }
-
-    .faq {
-      background: var(--white);
-    }
-
-    .faq-header {
-      margin-bottom: 3rem;
-    }
-
-    .faq-columns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.4rem, 4vw, 3rem);
-      align-items: start;
-    }
-
-    .faq-block {
-      border-top: 2px solid var(--navy);
-      background: var(--white);
-    }
-
-    .faq-block h3 {
-      margin: 0;
-      padding: 1.2rem 1.35rem;
-      border-bottom: 1px solid rgba(4, 19, 79, .1);
-    }
-
-    details {
-      border-bottom: 1px solid rgba(4, 19, 79, .1);
-    }
-
-    summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 1rem 1.35rem;
-      color: var(--navy);
-      font-weight: 600;
-      line-height: 1.45;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    summary::-webkit-details-marker { display: none; }
-    summary::after {
-      content: "+";
-      color: var(--gold);
-      font-size: 1.2rem;
-      font-weight: 400;
-      line-height: 1;
-      transition: transform .2s ease;
-    }
-
-    details[open] summary::after { transform: rotate(45deg); }
-
-    details p {
-      margin: 0;
-      padding: 0 1.35rem 1.15rem;
-      color: var(--ink-soft);
-      font-size: .92rem;
-    }
-
-    .sticky-mobile {
-      display: none;
-      position: fixed;
-      left: 1rem;
-      right: 1rem;
-      bottom: 1rem;
-      z-index: 60;
-      justify-content: center;
-      min-height: 46px;
-      box-shadow: 0 16px 40px rgba(4, 19, 79, .28);
-    }
-
-    .final {
-      padding: clamp(4.8rem, 8vw, 7rem) var(--page);
-      text-align: center;
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .final h2 {
-      margin-left: auto;
-      margin-right: auto;
-      color: var(--white);
-    }
-
-    .final p {
-      max-width: 560px;
-      margin: 0 auto 2rem;
-      color: rgba(247, 247, 247, .74);
-    }
-
-    .footer {
-      padding: 1.7rem var(--page);
-      background: var(--navy);
-      color: rgba(247, 247, 247, .45);
-      border-top: 1px solid rgba(247, 247, 247, .1);
-    }
-
-    .footer-inner {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: center;
-      font-size: .78rem;
-    }
-
-    .fade {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-
-    .fade.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 920px) {
-      .nav-links { display: none; }
-      .menu { display: block; }
-      .hero-grid,
-      .about-grid,
-      .service-grid,
-      .service-extra,
-      .faq-columns {
-        grid-template-columns: 1fr;
-      }
-      .fit-grid { grid-template-columns: 1fr; }
-      .hero { padding-top: 3rem; }
-    }
-
-    @media (max-width: 620px) {
-      .nav-inner { padding-inline: 1rem; }
-      .logo img { width: 52px; height: 52px; }
-      .sticky-mobile { display: inline-flex; }
-      body { padding-bottom: 4.8rem; }
-      .footer-inner {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div id="progress"></div>
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a class="logo" href="#inicio" aria-label="Anaïs Herreros">
+      <a class="logo" href="#inicio" aria-label="AnaÃ¯s Herreros">
         <img src="assets/Logov1.png" alt="" />
-        <span class="logo-name">Anaïs Herreros</span>
-        <span class="logo-sub">Astrología psicológica</span>
+        <span class="logo-name">AnaÃ¯s Herreros</span>
+        <span class="logo-sub">AstrologÃ­a psicolÃ³gica</span>
       </a>
-      <button class="menu" id="menu" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
-      <div class="nav-links" aria-label="Navegación principal">
+      <button class="menu" id="menu" aria-label="Abrir menÃº" aria-expanded="false"><span></span></button>
+      <div class="nav-links" aria-label="NavegaciÃ³n principal">
         <a href="#inicio">Inicio</a>
-        <a href="#para-quien">Para quién</a>
-        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#para-quien">Para quiÃ©n</a>
+        <a href="#sobre-mi">Sobre mÃ­</a>
         <a href="#lectura">Lectura conmigo</a>
         <a href="#faq">FAQ</a>
         <a class="nav-cta" href="https://atlasastral.app" target="_blank" rel="noreferrer">Lectura gratis</a>
       </div>
       <div class="drawer" id="drawer">
         <a href="#inicio">Inicio</a>
-        <a href="#para-quien">Para quién</a>
-        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#para-quien">Para quiÃ©n</a>
+        <a href="#sobre-mi">Sobre mÃ­</a>
         <a href="#lectura">Lectura conmigo</a>
         <a href="#faq">FAQ</a>
         <a class="nav-cta" href="https://atlasastral.app" target="_blank" rel="noreferrer">Lectura gratis</a>
@@ -804,16 +45,16 @@
         <div class="hero-copy fade">
           <span class="label">Lectura gratuita</span>
           <h1>Recibe una primera lectura de tu carta natal y empieza a entender tus patrones.</h1>
-          <p class="lead">Un primer contacto con la astrología psicológica: claro, concreto y sin predicciones raras. Elige un área de tu vida y recibe una interpretación inicial.</p>
+          <p class="lead">Un primer contacto con la astrologÃ­a psicolÃ³gica: claro, concreto y sin predicciones raras. Elige un Ã¡rea de tu vida y recibe una interpretaciÃ³n inicial.</p>
           <p class="note">Solo necesitas fecha, hora y lugar de nacimiento.</p>
         </div>
 
         <aside class="hero-card fade">
-          <span class="label">Cómo funciona</span>
-          <h2>Entras, eliges un área y recibes una primera interpretación.</h2>
+          <span class="label">CÃ³mo funciona</span>
+          <h2>Entras, eliges un Ã¡rea y recibes una primera interpretaciÃ³n.</h2>
           <ol class="steps">
             <li><span>01</span><strong>Entras en Atlas Astral y pones tus datos natales.</strong></li>
-            <li><span>02</span><strong>Eliges qué quieres mirar ahora: amor, vocación, propósito o bloqueo.</strong></li>
+            <li><span>02</span><strong>Eliges quÃ© quieres mirar ahora: amor, vocaciÃ³n, propÃ³sito o bloqueo.</strong></li>
             <li><span>03</span><strong>Recibes una lectura inicial para empezar a observar tus patrones.</strong></li>
           </ol>
           <a class="btn btn-light" href="https://atlasastral.app" target="_blank" rel="noreferrer">Empezar ahora</a>
@@ -826,38 +67,38 @@
       <div class="section-inner">
         <span class="label fade">Lectura gratis</span>
         <h2 class="fade">Para empezar a mirar, no para resolver toda tu vida en cinco minutos.</h2>
-        <p class="lead fade">Es una puerta de entrada. Te da una primera claridad sin tener que reservar una sesión completa.</p>
+        <p class="lead fade">Es una puerta de entrada. Te da una primera claridad sin tener que reservar una sesiÃ³n completa.</p>
 
         <div class="fit-grid">
           <div class="fit-column fade">
-            <h3>Para quién es</h3>
+            <h3>Para quiÃ©n es</h3>
             <div class="fit-item">
               <strong>Si tienes curiosidad por tu carta natal</strong>
-              <p>Quieres saber qué puede decir de ti sin tragarte un informe eterno ni meterte de golpe en una consulta.</p>
+              <p>Quieres saber quÃ© puede decir de ti sin tragarte un informe eterno ni meterte de golpe en una consulta.</p>
             </div>
             <div class="fit-item">
               <strong>Si hay un tema que te ronda</strong>
-              <p>Amor, trabajo, propósito, bloqueo o una sensación de no saber muy bien hacia dónde tirar.</p>
+              <p>Amor, trabajo, propÃ³sito, bloqueo o una sensaciÃ³n de no saber muy bien hacia dÃ³nde tirar.</p>
             </div>
             <div class="fit-item">
               <strong>Si quieres probar sin humo</strong>
-              <p>No buscas horóscopos ni predicciones. Quieres ver si la astrología psicológica te aporta algo real.</p>
+              <p>No buscas horÃ³scopos ni predicciones. Quieres ver si la astrologÃ­a psicolÃ³gica te aporta algo real.</p>
             </div>
           </div>
 
           <div class="fit-column fade">
-            <h3>Qué vas a recibir</h3>
+            <h3>QuÃ© vas a recibir</h3>
             <div class="fit-item">
-              <strong>Un área concreta de tu vida</strong>
+              <strong>Un Ã¡rea concreta de tu vida</strong>
               <p>No todo a la vez. Eliges el foco para que la lectura tenga sentido y no se convierta en ruido.</p>
             </div>
             <div class="fit-item">
               <strong>Patrones iniciales</strong>
-              <p>Una primera mirada a bloqueos, motivaciones y dinámicas que pueden estar repitiéndose.</p>
+              <p>Una primera mirada a bloqueos, motivaciones y dinÃ¡micas que pueden estar repitiÃ©ndose.</p>
             </div>
             <div class="fit-item">
               <strong>Lenguaje claro</strong>
-              <p>Sin tecnicismos innecesarios, sin frases místicas vacías y sin venderte una predicción.</p>
+              <p>Sin tecnicismos innecesarios, sin frases mÃ­sticas vacÃ­as y sin venderte una predicciÃ³n.</p>
             </div>
           </div>
         </div>
@@ -872,12 +113,12 @@
       <div class="section-inner about-grid">
         <div class="portrait fade">Foto</div>
         <div class="about-copy fade">
-          <span class="label">Sobre mí</span>
-          <h2>Anaïs Herreros</h2>
-          <p>Empecé a estudiar astrología psicológica cuando me sentía perdida, sin dirección y viviendo una vida que no terminaba de sentir mía. Lo que empezó como búsqueda personal se convirtió en una forma de entender patrones, decisiones, relaciones y procesos vitales.</p>
-          <p>Trabajo la astrología como una herramienta de autoconocimiento: directa, humana y aplicable. No para predecir lo que va a pasar, sino para entender cómo funcionas y qué necesitas mirar con más honestidad.</p>
+          <span class="label">Sobre mÃ­</span>
+          <h2>AnaÃ¯s Herreros</h2>
+          <p>EmpecÃ© a estudiar astrologÃ­a psicolÃ³gica cuando me sentÃ­a perdida, sin direcciÃ³n y viviendo una vida que no terminaba de sentir mÃ­a. Lo que empezÃ³ como bÃºsqueda personal se convirtiÃ³ en una forma de entender patrones, decisiones, relaciones y procesos vitales.</p>
+          <p>Trabajo la astrologÃ­a como una herramienta de autoconocimiento: directa, humana y aplicable. No para predecir lo que va a pasar, sino para entender cÃ³mo funcionas y quÃ© necesitas mirar con mÃ¡s honestidad.</p>
           <div class="stats">
-            <div class="stat"><strong data-count="12">0</strong><span>Años de proceso</span></div>
+            <div class="stat"><strong data-count="12">0</strong><span>AÃ±os de proceso</span></div>
             <div class="stat"><strong data-count="500" data-prefix="+">0</strong><span>Cartas interpretadas</span></div>
             <div class="stat"><strong>Sin humo</strong><span>Lenguaje claro</span></div>
           </div>
@@ -890,52 +131,52 @@
         <div class="service-grid">
           <div class="service-copy fade">
             <span class="label">Lectura conmigo</span>
-            <h2>Cuando quieres una lectura más humana, personalizada y con matiz.</h2>
-            <p>La lectura gratuita te da una primera puerta. La lectura conmigo es para ir más profundo: contexto, preguntas, conversación y una interpretación adaptada a tu historia y a lo que estás viviendo ahora.</p>
-            <p>Es para cuando no quieres solo “saber tu carta”, sino entender qué significa en tu vida real.</p>
+            <h2>Cuando quieres una lectura mÃ¡s humana, personalizada y con matiz.</h2>
+            <p>La lectura gratuita te da una primera puerta. La lectura conmigo es para ir mÃ¡s profundo: contexto, preguntas, conversaciÃ³n y una interpretaciÃ³n adaptada a tu historia y a lo que estÃ¡s viviendo ahora.</p>
+            <p>Es para cuando no quieres solo â€œsaber tu cartaâ€, sino entender quÃ© significa en tu vida real.</p>
           </div>
 
           <aside class="service-panel fade">
-            <h3>Lectura psicológica de carta natal</h3>
+            <h3>Lectura psicolÃ³gica de carta natal</h3>
             <ul>
-              <li>Sesión individual por videollamada.</li>
+              <li>SesiÃ³n individual por videollamada.</li>
               <li>Lectura completa de carta natal con foco en tu momento actual.</li>
               <li>Espacio para preguntas, contexto y matices.</li>
-              <li>Diferente a una lectura automática: aquí hay mirada humana.</li>
+              <li>Diferente a una lectura automÃ¡tica: aquÃ­ hay mirada humana.</li>
             </ul>
-            <div class="price">120€</div>
-            <div class="price-detail">Sesión completa</div>
+            <div class="price">120â‚¬</div>
+            <div class="price-detail">SesiÃ³n completa</div>
             <a class="btn btn-primary" href="mailto:hola@atlasastral.app?subject=Quiero%20reservar%20una%20lectura%20con%20Ana%C3%AFs">Reservar lectura</a>
-            <p class="note">Te responderé para cerrar fecha, formato y siguientes pasos.</p>
+            <p class="note">Te responderÃ© para cerrar fecha, formato y siguientes pasos.</p>
           </aside>
         </div>
 
         <div class="service-extra">
           <div class="service-extra-block fade">
-            <h3>Para quién es esto</h3>
+            <h3>Para quiÃ©n es esto</h3>
             <div class="service-extra-item">
-              <strong><span class="service-extra-num">01</span>Sientes que estás en piloto automático</strong>
-              <p>Tu vida funciona, pero no sientes que sea la tuya. No sabes qué quieres, hacia dónde vas, ni por qué repites siempre los mismos patrones.</p>
+              <strong><span class="service-extra-num">01</span>Sientes que estÃ¡s en piloto automÃ¡tico</strong>
+              <p>Tu vida funciona, pero no sientes que sea la tuya. No sabes quÃ© quieres, hacia dÃ³nde vas, ni por quÃ© repites siempre los mismos patrones.</p>
             </div>
             <div class="service-extra-item">
-              <strong><span class="service-extra-num">02</span>Estás en un momento de cambio</strong>
-              <p>Algo se ha roto o está cambiando — en el trabajo, en una relación, en cómo te ves. Necesitas claridad, no más ruido.</p>
+              <strong><span class="service-extra-num">02</span>EstÃ¡s en un momento de cambio</strong>
+              <p>Algo se ha roto o estÃ¡ cambiando â€” en el trabajo, en una relaciÃ³n, en cÃ³mo te ves. Necesitas claridad, no mÃ¡s ruido.</p>
             </div>
             <div class="service-extra-item">
-              <strong><span class="service-extra-num">03</span>Ya probaste la astrología pero no te convenció</strong>
-              <p>Los horóscopos no te dicen nada útil. Buscas algo serio, estructurado y aplicable. Sin predicciones. Esto es diferente.</p>
+              <strong><span class="service-extra-num">03</span>Ya probaste la astrologÃ­a pero no te convenciÃ³</strong>
+              <p>Los horÃ³scopos no te dicen nada Ãºtil. Buscas algo serio, estructurado y aplicable. Sin predicciones. Esto es diferente.</p>
             </div>
           </div>
 
           <div class="service-extra-block fade">
-            <h3>Cómo funciona</h3>
+            <h3>CÃ³mo funciona</h3>
             <div class="service-extra-item">
-              <strong>Reservas la sesión</strong>
-              <p>Me escribes para cerrar fecha y me envías tus datos de nacimiento: fecha, hora y lugar.</p>
+              <strong>Reservas la sesiÃ³n</strong>
+              <p>Me escribes para cerrar fecha y me envÃ­as tus datos de nacimiento: fecha, hora y lugar.</p>
             </div>
             <div class="service-extra-item">
               <strong>Preparo tu carta</strong>
-              <p>Reviso tu carta natal antes de la sesión para llegar con una lectura clara y enfocada.</p>
+              <p>Reviso tu carta natal antes de la sesiÃ³n para llegar con una lectura clara y enfocada.</p>
             </div>
             <div class="service-extra-item">
               <strong>Lo vemos juntas en directo</strong>
@@ -957,40 +198,40 @@
           <div class="faq-block fade">
             <h3>Lectura gratis</h3>
             <details>
-              <summary>¿Es una lectura completa?</summary>
-              <p>No. Es una primera interpretación enfocada en un área concreta de tu vida. Sirve para empezar a entender patrones, no para sustituir una sesión personal.</p>
+              <summary>Â¿Es una lectura completa?</summary>
+              <p>No. Es una primera interpretaciÃ³n enfocada en un Ã¡rea concreta de tu vida. Sirve para empezar a entender patrones, no para sustituir una sesiÃ³n personal.</p>
             </details>
             <details>
-              <summary>¿Tengo que saber astrología?</summary>
-              <p>No. Está escrita en lenguaje claro para que puedas entenderla aunque sea tu primer contacto con una carta natal.</p>
+              <summary>Â¿Tengo que saber astrologÃ­a?</summary>
+              <p>No. EstÃ¡ escrita en lenguaje claro para que puedas entenderla aunque sea tu primer contacto con una carta natal.</p>
             </details>
             <details>
-              <summary>¿Qué datos necesito?</summary>
-              <p>Fecha, hora y lugar de nacimiento. Son necesarios para calcular la carta natal con precisión.</p>
+              <summary>Â¿QuÃ© datos necesito?</summary>
+              <p>Fecha, hora y lugar de nacimiento. Son necesarios para calcular la carta natal con precisiÃ³n.</p>
             </details>
             <details>
-              <summary>¿Me van a mandar spam?</summary>
-              <p>No debería sentirse como ruido. La idea es que recibas la lectura y, si quieres, puedas seguir profundizando desde ahí.</p>
+              <summary>Â¿Me van a mandar spam?</summary>
+              <p>No deberÃ­a sentirse como ruido. La idea es que recibas la lectura y, si quieres, puedas seguir profundizando desde ahÃ­.</p>
             </details>
           </div>
 
           <div class="faq-block fade">
             <h3>Lectura conmigo</h3>
             <details>
-              <summary>¿Qué diferencia hay con la lectura gratis?</summary>
-              <p>La gratuita es automática e inicial. La lectura conmigo tiene contexto, conversación, preguntas y una interpretación más humana y personalizada.</p>
+              <summary>Â¿QuÃ© diferencia hay con la lectura gratis?</summary>
+              <p>La gratuita es automÃ¡tica e inicial. La lectura conmigo tiene contexto, conversaciÃ³n, preguntas y una interpretaciÃ³n mÃ¡s humana y personalizada.</p>
             </details>
             <details>
-              <summary>¿Para quién es?</summary>
-              <p>Para personas que quieren mirar patrones de verdad: relaciones, bloqueo, dirección vital, repetición, autosabotaje o momentos de cambio.</p>
+              <summary>Â¿Para quiÃ©n es?</summary>
+              <p>Para personas que quieren mirar patrones de verdad: relaciones, bloqueo, direcciÃ³n vital, repeticiÃ³n, autosabotaje o momentos de cambio.</p>
             </details>
             <details>
-              <summary>¿Cuánto dura?</summary>
-              <p>La sesión completa está pensada para trabajar con calma tu carta natal y tu momento actual. La duración exacta puede ajustarse cuando cierres el formato final.</p>
+              <summary>Â¿CuÃ¡nto dura?</summary>
+              <p>La sesiÃ³n completa estÃ¡ pensada para trabajar con calma tu carta natal y tu momento actual. La duraciÃ³n exacta puede ajustarse cuando cierres el formato final.</p>
             </details>
             <details>
-              <summary>¿Es predictiva?</summary>
-              <p>No. El enfoque es psicológico y práctico. La carta se usa para entenderte, no como sentencia sobre lo que va a pasar.</p>
+              <summary>Â¿Es predictiva?</summary>
+              <p>No. El enfoque es psicolÃ³gico y prÃ¡ctico. La carta se usa para entenderte, no como sentencia sobre lo que va a pasar.</p>
             </details>
           </div>
         </div>
@@ -999,91 +240,21 @@
 
     <section class="final">
       <span class="label fade">Primer paso</span>
-      <h2 class="fade">Empieza por una lectura gratuita. Si necesitas más matiz, seguimos desde ahí.</h2>
-      <p class="fade">Una primera interpretación puede ayudarte a ver algo que ya intuías, pero no habías ordenado todavía.</p>
+      <h2 class="fade">Empieza por una lectura gratuita. Si necesitas mÃ¡s matiz, seguimos desde ahÃ­.</h2>
+      <p class="fade">Una primera interpretaciÃ³n puede ayudarte a ver algo que ya intuÃ­as, pero no habÃ­as ordenado todavÃ­a.</p>
       <a class="btn btn-light fade" href="https://atlasastral.app" target="_blank" rel="noreferrer">Recibir lectura gratis</a>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      <span>Anaïs Herreros · Astrología psicológica</span>
-      <span>© 2026</span>
+      <span>AnaÃ¯s Herreros Â· AstrologÃ­a psicolÃ³gica</span>
+      <span>Â© 2026</span>
     </div>
   </footer>
 
   <a class="btn btn-primary sticky-mobile" href="https://atlasastral.app" target="_blank" rel="noreferrer">Lectura gratis</a>
-
-  <script>
-    const progress = document.getElementById("progress");
-    const nav = document.getElementById("nav");
-    const menu = document.getElementById("menu");
-
-    window.addEventListener("scroll", () => {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progressWidth = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
-      progress.style.width = `${progressWidth}%`;
-    });
-
-    menu.addEventListener("click", () => {
-      const open = nav.classList.toggle("open");
-      document.body.classList.toggle("nav-open", open);
-      menu.setAttribute("aria-expanded", String(open));
-    });
-
-    document.querySelectorAll(".drawer a").forEach((link) => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("open");
-        document.body.classList.remove("nav-open");
-        menu.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
-
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = Number(el.dataset.count);
-        const prefix = el.dataset.prefix || "";
-        if (!target) return;
-
-        let current = 0;
-        const step = Math.max(1, Math.ceil(target / 34));
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            el.textContent = `${prefix}${target}`;
-            clearInterval(timer);
-            return;
-          }
-          el.textContent = `${prefix}${current}`;
-        }, 32);
-
-        countObserver.unobserve(el);
-      });
-    }, { threshold: 0.65 });
-
-    document.querySelectorAll("[data-count]").forEach((el) => countObserver.observe(el));
-
-    document.querySelectorAll(".faq-block details").forEach((detail) => {
-      detail.addEventListener("toggle", () => {
-        if (!detail.open) return;
-        const block = detail.closest(".faq-block");
-        block.querySelectorAll("details").forEach((other) => {
-          if (other !== detail) other.open = false;
-        });
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
