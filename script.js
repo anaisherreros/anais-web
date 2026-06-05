@@ -1,4 +1,4 @@
-﻿const progress = document.getElementById("progress");
+const progress = document.getElementById("progress");
     const nav = document.getElementById("nav");
     const menu = document.getElementById("menu");
 
